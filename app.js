@@ -23,3 +23,13 @@ menu_item.forEach((item) => {
 		mobile_menu.classList.toggle('active');
 	});
 });
+// Add your JavaScript code here
+// In this example, I'll add a simple function to display the current date and time in the console.
+
+function displayDateTime() {
+	const now = new Date();
+	console.log(now);
+  }
+  
+  displayDateTime();
+  

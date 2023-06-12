@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  
+
   <!-- Header -->
   <section id="header">
     <div class="header container">
@@ -26,7 +26,7 @@
           </div>
           <ul>
             <li><a href="#hero" data-after="Home">Home</a></li>
-      
+
             <li><a href="#projects" data-after="Projects">Projects</a></li>
             <li><a href="#about" data-after="About">About</a></li>
             <li><a href="#contact" data-after="Contact">Contact</a></li>
@@ -51,7 +51,7 @@
   </section>
   <!-- End Hero Section  -->
 
-  
+
   <!-- Projects Section -->
   <section id="projects">
     <div class="projects container">
@@ -61,28 +61,25 @@
       <div class="all-projects">
         <div class="project-item">
           <div class="project-info">
-            
+
             <h2>Amazon Prime Clone</h2>
             <p>Demonstrated front-end development skills by creating a Netflix clone utilizing TMDB API for movies list and frameworks such as React JS.!</p>
           </div>
-          <div class="project-img">  
+          <div class="project-img">
             <img src="./img/Amazon.png" alt="img">
           </div>
         </div>
         <div class="project-item">
           <div class="project-info">
-           
+
             <h2>Ride-Share</h2>
             <p>Currently developing a carpool application exclusively for University of Dayton students using technologies such as React JS, Mongo DB, Node JS.</p>
-<p>• Integrated Google Maps API into the product to enable features such as location autocomplete, distance calculation between two locations, and ensure the route selected by the driver falls within the city that the user wants to carpool in.</p>
+            <p>• Integrated Google Maps API into the product to enable features such as location autocomplete, distance calculation between two locations, and ensure the route selected by the driver falls within the city that the user wants to carpool in.</p>
           </div>
           <div class="project-img">
             <img src="./img/Ride.png" alt="img">
           </div>
         </div>
-        
-        
-        
       </div>
     </div>
   </section>
@@ -100,7 +97,7 @@
         <h1 class="section-title">About <span>me</span></h1>
         <h2> Stack Developer</h2>
         <p>As a highly skilled full stack developer and cloud engineer, I bring a wealth of expertise in cutting-edge technologies such as Java, Python, React, JavaScript, HTML, CSS, SQL, MongoDB, Spring, PostgreSQL, Docker, Kubernetes, Shell, AWS, and GCP. My deep knowledge of these technologies, combined with my passion for delivering scalable and efficient solutions, has enabled me to consistently deliver high-quality results for clients. Whether it's building dynamic and interactive web applications, deploying and managing cloud infrastructure, or optimizing database systems, I have the skills and experience to get the job done right.!</p>
-       
+
         <a href="./img/Vishnu_Resume.pdf" download class="cta">Download Resume</a>
       </div>
     </div>
@@ -119,7 +116,7 @@
           <div class="contact-info">
             <h1>Phone</h1>
             <h2>+1 937-999-8139</h2>
-    
+
           </div>
         </div>
         <div class="contact-item">
@@ -127,7 +124,7 @@
           <div class="contact-info">
             <h1>Email</h1>
             <h2>karamv1@udayton.edu</h2>
-            
+
           </div>
         </div>
         <div class="contact-item">
@@ -150,7 +147,7 @@
       </div>
       <h2>Code Crafter</h2>
       <div class="social-icon">
-       
+
         <div class="social-item">
           <a href="https://github.com/VishnuReddyKaram"><img src="https://img.icons8.com/bubbles/100/000000/github.png" /></a>
         </div>
@@ -158,51 +155,43 @@
           <a href="https://www.linkedin.com/in/vishnu-karam/"><img src="https://img.icons8.com/bubbles/100/000000/linkedin.png" /></a>
         </div>
         <div class="social-item">
-          <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/facebook.png" /></a>
+          <a href="#"><img src="https://img.icons8.com/bubbles/100/000000/twitter.png" /></a>
         </div>
+
       </div>
-     
+      <p>&#169; 2023 Vishnu Karam. All right reserved.</p>
     </div>
   </section>
   <!-- End Footer -->
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
-    function fetchWeatherData() {
+    window.addEventListener('DOMContentLoaded', () => {
       const apiKey = 'a1bb32e2f8542780afe28c16b131e73f';
+      const city = 'LONDON';
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          const { latitude, longitude } = position.coords;
+      axios.get(url)
+        .then(response => {
+          const weatherData = response.data;
+          const temperature = weatherData.current.temp_c;
+          const condition = weatherData.current.condition.text;
+          const humidity = weatherData.current.humidity;
+          const windSpeed = weatherData.current.wind_kph;
 
-          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
-            .then(response => response.json())
-            .then(data => {
-              const weatherContainer = document.createElement('div');
-              weatherContainer.classList.add('weather-container');
-
-              const temperature = data.main.temp;
-              const description = data.weather[0].description;
-
-              weatherContainer.innerHTML = `
-                <p>Temperature: ${temperature}°C</p>
-                <p>Description: ${description}</p>
-              `;
-
-              document.getElementById('hero').appendChild(weatherContainer);
-            })
-            .catch(error => console.log(error));
-        }, error => {
-          console.log('Geolocation error:', error);
+          const weatherElement = document.getElementById('weather');
+          weatherElement.innerHTML = `
+            <p>Temperature: ${temperature} &#8451;</p>
+            <p>Condition: ${condition}</p>
+            <p>Humidity: ${humidity}%</p>
+            <p>Wind Speed: ${windSpeed} km/h</p>
+          `;
+        })
+        .catch(error => {
+          console.log('Error:', error);
         });
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
-    }
-
-    window.onload = function () {
-      fetchWeatherData();
-    };
+    });
   </script>
-  <script src="./app.js"></script>
 </body>
 
 </html>
