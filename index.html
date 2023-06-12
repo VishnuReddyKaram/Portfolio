@@ -98,7 +98,7 @@
       </div>
       <div class="col-right">
         <h1 class="section-title">About <span>me</span></h1>
-        <h2>Full Stack Developer</h2>
+        <h2> Stack Developer</h2>
         <p>As a highly skilled full stack developer and cloud engineer, I bring a wealth of expertise in cutting-edge technologies such as Java, Python, React, JavaScript, HTML, CSS, SQL, MongoDB, Spring, PostgreSQL, Docker, Kubernetes, Shell, AWS, and GCP. My deep knowledge of these technologies, combined with my passion for delivering scalable and efficient solutions, has enabled me to consistently deliver high-quality results for clients. Whether it's building dynamic and interactive web applications, deploying and managing cloud infrastructure, or optimizing database systems, I have the skills and experience to get the job done right.!</p>
        
         <a href="./img/Vishnu_Resume.pdf" download class="cta">Download Resume</a>
@@ -165,6 +165,43 @@
     </div>
   </section>
   <!-- End Footer -->
+  <script>
+    function fetchWeatherData() {
+      const apiKey = 'a1bb32e2f8542780afe28c16b131e73f';
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const { latitude, longitude } = position.coords;
+
+          fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+            .then(response => response.json())
+            .then(data => {
+              const weatherContainer = document.createElement('div');
+              weatherContainer.classList.add('weather-container');
+
+              const temperature = data.main.temp;
+              const description = data.weather[0].description;
+
+              weatherContainer.innerHTML = `
+                <p>Temperature: ${temperature}°C</p>
+                <p>Description: ${description}</p>
+              `;
+
+              document.getElementById('hero').appendChild(weatherContainer);
+            })
+            .catch(error => console.log(error));
+        }, error => {
+          console.log('Geolocation error:', error);
+        });
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
+    }
+
+    window.onload = function () {
+      fetchWeatherData();
+    };
+  </script>
   <script src="./app.js"></script>
 </body>
 
